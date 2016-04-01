@@ -1,6 +1,7 @@
+var convert = require("parse-ms");
+var ejs = require('ejs');
 var express = require("express");
 var app = express();
-var convert = require("parse-ms");
 
 
 var PORT_NO = 80;
@@ -10,7 +11,7 @@ var count = 1;
 try
 {
     app.set('views', __dirname + '/');
-    app.engine('htm', require('ejs').renderFile);
+    app.engine('htm', ejs.renderFile);
     app.use('/css', express.static(__dirname + '/css'));
     app.use('/images', express.static(__dirname + '/images'));
     app.use('/js', express.static(__dirname + '/js'));
@@ -48,7 +49,7 @@ try
             }
             else
             {
-                console.log(" redirecting to login.htm page.");
+                console.log("Redirecting to login.htm page.");
                 res.render("./login.htm");
                 return;
             }
