@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hub configuration page</title>
+
+    <script type="text/javascript" src="/js/output.min.js"></script>
+    <script type="text/javascript" src="/js/aes.js"></script>
+    <script type="text/javascript" src="/js/jsonformatter.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/js/perfect-scrollbar.js"></script>
+
+    <script language="JavaScript">
+
+        var upTimeInterval = null;
+
+        $.ajaxSetup({cache: false});
+            $(document).ready(function()
+            {
+                upTimeInterval = setInterval(function()
+                {
+                    $.ajax({url:'/uptime', success:function(result){
+                        result = JSON.parse(result);
+                        if(result.err)
+                        {
+                            clearInterval(upTimeInterval);
+                            document.body.innerHTML = "";
+                            location.reload(true);
+                        }
+                        else
+                        {
+                            $('#uptime').text(JSON.stringify(result.uptime));
+                        }
+                    }});
+                }, 1000);
+            });
+
+        function logout()
+        {
+            var confirmation = confirm("Are you sure you want to logout?");
+            if(confirmation === true)
+            {
+                console.log("Heyyy");
+                clearInterval(upTimeInterval);
+                $.get("/logout", function(data)
+                {
+                    document.body.innerHTML = "";
+                    setTimeout(function()
+                    {
+                        location.reload(true);
+                    },10);
+                });
+            }
+            else
+            {
+                location.reload();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div id="uptime"> hello </div>
+        <input type="button" id="logout" onclick="logout()" value="logout">
+    </div>
+
+</body>

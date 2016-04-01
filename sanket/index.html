@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SnapAV Login</title>
+    <style>
+
+        html, body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+            border:0;
+            outline:0;
+            text-decoration:none;
+            margin:0;
+            padding:0;
+            font-size:14px;
+            font-family: 'Open Sans';
+        }
+        .main-container{
+            min-height:100%;
+            position:relative;
+        }
+        .login-top-bg {
+            background-color: #0171c7;
+            height: 225px;
+            max-height: 325px;
+        }
+        button {
+            width: auto;
+            padding: 5px 22px;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #eaeaea;
+            font-size:14px;
+            font-family: 'Open Sans';
+        }
+        .login-details {
+            position: relative;
+            top: -40px;
+            width: 350px;
+            height: 300px;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
+        }
+        .login-details form {
+            width: 75%;
+            margin: auto;
+            padding-top: 35px;
+        }
+        .input-field {
+            padding: 10px;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            display: block;
+            background: #fff;
+            color: #636363;
+            width: 100%;
+            border: none;
+            border-radius: 2px;
+            border: 1px solid #e2e2e2;
+            margin: 15px 0 30px 0;
+        }
+        .align-middle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            top: 0;
+            margin: auto;
+        }
+
+        header, hgroup, nav, section, article, aside, footer, main {
+            display:block;
+        }
+        body {
+            overflow:hidden;
+        }
+        p.page-Details {
+            text-align: center;
+            color: #0171c7;
+            font-size: 25px;
+
+        }
+        img {
+            width: 200px;
+        }
+        .image-center-align {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("#username").val("");
+            $("#password").val("");
+        });
+
+        function sendRequest()
+        {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            if(username.length < 15 || password.length < 6)
+            {
+                alert("Invalid username or password");
+                $("#username").val("");
+                $("#password").val("");
+                return;
+            }
+
+
+
+            var regexTOMatchNumber = /\d+$/;
+            if(!regexTOMatchNumber.test(username))
+            {
+                alert("Invalid USER-ID provided");
+                $("#username").val("");
+                $("#password").val("");
+                return;
+            }
+
+            $.post( "/login",{
+                        username:username,password:password
+                    },
+                    function( data ) {
+                        if(data && data.code === 200)
+                        {
+                            window.location.href = data.href;
+                            return;
+                        }
+                    }
+            );
+        }
+    </script>
+</head>
+<body>
+<!-- main-container starts-->
+<div class="main-container">
+    <!-- Main-area starts-->
+    <div class="main-area">
+        <div class="login-top-bg"></div>
+
+        <div class="login-details align-middle">
+            <!--<p class="page-Details">SnapAV Login Page</p>-->
+
+            <form method="post" action="/login" target="_self">
+                <img src="images/logo-snap-av.jpg" class="image-center-align">
+
+                <div>
+                    <!-- Email Address -->
+                    <input type="text" name="email" class="input-field" placeholder="User-ID" id="username"/>
+                </div>
+                <div class="group">
+                    <!-- Password -->
+                    <input type="password" name="password" class="input-field" placeholder="Password" id="password">
+
+                </div>
+                <button type="button" value="Submit" onclick="sendRequest();">Login</button>
+            </form>
+        </div>
+    </div>
+    <!-- Main-area Ends -->
+</div>
+<!-- main-container Ends -->
+</body>
+</html>
