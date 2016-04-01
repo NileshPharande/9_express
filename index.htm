@@ -41,15 +41,11 @@
             var confirmation = confirm("Are you sure you want to logout?");
             if(confirmation === true)
             {
-                console.log("Heyyy");
                 clearInterval(upTimeInterval);
                 $.get("/logout", function(data)
                 {
                     document.body.innerHTML = "";
-                    setTimeout(function()
-                    {
-                        location.reload(true);
-                    },10);
+                    location.reload(true);
                 });
             }
             else
