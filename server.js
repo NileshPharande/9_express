@@ -10,6 +10,43 @@ var count = 1;
 
 try
 {
+/*
+    var redis = require("redis");
+
+    var client = redis.createClient();
+    client.auth('mindstix');
+    client.on('connect', function()
+    {
+        console.log("Redis connected.");
+    });
+    client.set('framework', 'AngularJS');
+    client.set('framework1', 'AngularJS_2');
+    client.expire('framework', 30);
+    var readDatabaseInterval = setInterval(function()
+    {
+        client.get('framework', function(err, reply)
+        {
+            console.log("Reply: ", reply);
+            client.ttl('framework', function(err, remainingTime)
+            {
+                console.log("ReaminingTime: ", remainingTime);
+            });
+        });
+        client.get('framework1', function(err, reply)
+        {
+            console.log("Reply1: ", reply);
+            client.ttl('framework1', function(err, remainingTime)
+            {
+                console.log("ReaminingTime1: ", remainingTime);
+            });
+        });
+    }, 1000*5);
+    var updateSession = setInterval(function()
+    {
+        client.expire('framework', 30);
+    }, 1000*25);
+*/
+
     app.set('views', __dirname + '/');
     app.engine('htm', ejs.renderFile);
     app.use('/css', express.static(__dirname + '/css'));
