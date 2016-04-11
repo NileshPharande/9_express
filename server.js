@@ -19,6 +19,10 @@ try
     {
         console.log("Redis connected.");
     });
+    client.on('error', function(err)
+    {
+        console.log("Error in connecting: ", err);
+    });
     client.set('framework', 'AngularJS');
     client.set('framework1', 'AngularJS_2');
     client.expire('framework', 30);
