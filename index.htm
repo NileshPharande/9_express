@@ -14,12 +14,21 @@
     <script language="JavaScript">
 
         var upTimeInterval = null;
+        var sessionInterval = null;
 
         $.ajaxSetup({cache: false});
             $(document).ready(function()
             {
                 upTimeInterval = setInterval(function()
                 {
+                    console.log("SESSION: ", document.cookie);
+                    if(document.cookie.indexOf("connect.sid") === -1)
+                    {
+                        clearInterval(upTimeInterval);
+                        document.body.innerHTML = "";
+                        location.reload(true);
+                        return;
+                    }
                     $.ajax({url:'/uptime', success:function(result){
                         result = JSON.parse(result);
                         if(result.err)
@@ -34,6 +43,10 @@
                         }
                     }});
                 }, 1000);
+                sessionInterval = setInterval(function()
+                {
+                    $.ajax({url:'/increaseSessionTimeout', success:function(result){}});
+                }, 10*1000);
             });
 
         function logout()
